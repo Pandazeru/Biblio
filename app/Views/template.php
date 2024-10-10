@@ -34,7 +34,7 @@
 
     <div id="container" class="m-2">
         <h1 class="rounded border border-dark p-2 text-center text-white bg-info"><?= $titre ?></h1>
-        <div class="d-flex flex-wrap justify-content-center"> <?= $content ?></div>
+        <div class="d-flex flex-column justify-content-center"> <?= $content ?></div>
     </div>
 
 
