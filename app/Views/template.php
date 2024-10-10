@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/5/vapor/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>assets/css/style.css">
+    <script src="<?= SITE_URL ?>assets/js/main.js" defer></script>
     <title>Biblio | <?= $titre; ?></title>
 </head>
 

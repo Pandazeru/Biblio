@@ -13,7 +13,7 @@ class livresRepository extends AbstractConnexion
      *
      * @var array
      */
-    private array $livres;
+    private array $livres = [];
 
     public function ajouterLivre(object $nouveauLivre) {
         $this->livres[] = $nouveauLivre;
@@ -40,6 +40,38 @@ class livresRepository extends AbstractConnexion
         }
     }
 
+    public function ajouterLivreBdd(string $titre, int $nbreDePages, string $textAlternatif, string $nomImage) {
+        // protection injection sql
+        $req = "INSERT INTO livre (titre, nbre_de_pages, url_image, text_alternatif) VALUES 
+                (:titre, :nbre_de_pages, :url_image, :text_alternatif)";
+        $stmt = $this->getConnexionBdd()->prepare($req);
+        $stmt->bindValue(":titre", $titre, PDO::PARAM_STR);
+        $stmt->bindValue(":nbre_de_pages", $nbreDePages, PDO::PARAM_STR);
+        $stmt->bindValue(":url_image", $nomImage, PDO::PARAM_STR);
+        $stmt->bindValue(":text_alternatif", $textAlternatif, PDO::PARAM_STR);
+        $stmt->execute();
+        $stmt->closeCursor();
+    }
+
+    public function modificationLivreBdd(string $titre, int $nbreDePages, string $textAlternatif, string $nomImage, int $idLivre) {
+        $req = "UPDATE livre SET titre = :titre, nbre_de_pages = :nbre_de_pages, text_alternatif = :text_alternatif, url_image = :url_image WHERE id_livre = :id_livre";
+        $stmt = $this->getConnexionBdd()->prepare($req);
+        $stmt->bindValue(":id_livre", $idLivre, PDO::PARAM_STR);
+        $stmt->bindValue(":titre", $titre, PDO::PARAM_STR);
+        $stmt->bindValue(":nbre_de_pages", $nbreDePages, PDO::PARAM_STR);
+        $stmt->bindValue(":url_image", $nomImage, PDO::PARAM_STR);
+        $stmt->bindValue(":text_alternatif", $textAlternatif, PDO::PARAM_STR);
+        $stmt->execute();
+        $stmt->closeCursor();
+    }
+
+    public function supprimerLivreBdd($idLivre) {
+        $req = "DELETE FROM livre WHERE id_livre = :id_livre";
+        $stmt = $this->getConnexionBdd()->prepare($req);
+        $stmt->bindValue(":id_livre", $idLivre, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->closeCursor();
+    }
 
     /**
      * Get the value of livres

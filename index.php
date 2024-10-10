@@ -11,7 +11,6 @@ require __DIR__ . '/app/lib/init.php';
 require __DIR__ . '/app/lib/functions.php';
 // debug(dirname(__DIR__)); 
 ?>
-
 <?php
 $livreController = new LivreController;
 try {
@@ -27,12 +26,16 @@ try {
                 } else if ($url[1] === 'l'){
                     $livreController->afficherUnLivre((int)$url[2]);
                 } else if ($url[1] === 'a'){
-                    echo "Ajout d'un livre";
-                }  else if ($url[1] === 'm'){
-                    echo "Modification d'un livre";
-                }  else if ($url[1] === 's'){
-                    echo "Suppression d'un livre";
-                }  else {
+                    $livreController->ajouterLivre();
+                } else if ($url[1] === 'm'){
+                    $livreController->modifierLivre((int)$url[2]);
+                } else if ($url[1] === 'mv'){
+                    $livreController->validationModifierLivre();
+                } else if ($url[1] === 'av'){
+                    $livreController->validationAjoutLivre();
+                } else if ($url[1] === 's'){
+                    $livreController->supprimerLivre((int)$url[2]);
+                } else {
                     throw new Exception("La page n'existe pas");
                 }
 
@@ -40,6 +43,6 @@ try {
         }
     }
 } catch (Exception $e) {
-    // echo 'Erreur : ' . $e->getMessage();
+    $message = $e->getMessage();
     require '../app/views/error404.php';
 }
